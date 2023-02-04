@@ -64,6 +64,7 @@ function onTurn(data) {
 	//util.log("onGameLoadedS with qgid: "+data.qgid);
 
 	io.to(this.player.opp.sockid).emit("opp_turn", {cell_id: data.cell_id});
+	io.emit("turn", {cell_id: data.cell_id, side: this.player.mode == 'm' ? 'x' : 'o'}); // todo: support for multiple games
 
 	util.log("turn  --  usr:"+this.player.mode + " - :"+this.player.name + "  --  cell_id:"+data.cell_id);
 	// updAdmin("Q answer - game - qgid:"+data.qgid + "  --  usr:"+this.player.mode + " - uid:"+this.player.uid + "  --  qnum:"+data.qnum + "  --  ans:"+data.ansnum);
@@ -92,6 +93,14 @@ function onClientDisconnect() {
 
 };
 
+function onWatch() {
+	io.emit("watch");
+}
+	
+function onGameInfo(data) {
+	io.emit("game_info", data);
+}
+
 // ----	--------------------------------------------	--------------------------------------------	
 // ----	--------------------------------------------	--------------------------------------------	
 
@@ -107,5 +116,9 @@ set_game_sock_handlers = function (socket) {
 	socket.on("ply_turn", onTurn);
 
 	socket.on("disconnect", onClientDisconnect);
+
+	socket.on("watch", onWatch);
+
+	socket.on("game_info", onGameInfo);
 
 };

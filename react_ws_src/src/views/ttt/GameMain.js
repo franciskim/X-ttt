@@ -73,11 +73,22 @@ export default class SetName extends Component {
 				next_turn_ply: data.mode=='m',
 				game_play: true,
 				game_stat: 'Playing with ' + data.opp.name,
-				game_side: data.mode=='m' ? 'x' : 'o'
+				game_side: data.mode=='m' ? 'x' : 'o',
+				opp_name: data.opp.name
 			})
 
 		}.bind(this));
 
+		this.socket.on('watch', function(data) { 
+			console.log('watch ', data)
+			if(this.props.game_type == 'live' && this.state.game_side == 'x') {
+				this.socket.emit('game_info', { 
+					player_x: app.settings.curr_user.name, 
+					player_o: this.state.opp_name,	
+					cell_vals: this.state.cell_vals 
+				});
+			}
+		}.bind(this));
 
 		this.socket.on('opp_turn', this.turn_opp_live.bind(this));
 

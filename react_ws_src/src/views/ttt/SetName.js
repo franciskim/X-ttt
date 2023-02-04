@@ -16,13 +16,15 @@ export default class SetName extends Component {
 
 				<h1>Set Name</h1>
 
+				<form onSubmit={this.saveName.bind(this)}>
 				<div ref='nameHolder' className='input_holder left'>
 					<label>Name </label>
-					<input ref='name' type='text' className='input name' placeholder='Name' />
+					<input autoFocus ref='name' type='text' className='input name' placeholder='Name' />
 				</div>
 
 
-				<button type='submit' onClick={this.saveName.bind(this)} className='button'><span>SAVE <span className='fa fa-caret-right'></span></span></button>
+				<button type='submit' className='button'><span>SAVE <span className='fa fa-caret-right'></span></span></button>
+				</form>
 
 			</div>
 		)
