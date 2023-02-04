@@ -60,19 +60,20 @@ export default class SetName extends Component {
 		this.socket = io(app.settings.ws_conf.loc.SOCKET__io.u);
 
 		this.socket.on('connect', function(data) { 
-			// console.log('socket connected', data)
+			console.log('socket connected', data)
 
 			this.socket.emit('new player', { name: app.settings.curr_user.name });
 
 		}.bind(this));
 
 		this.socket.on('pair_players', function(data) { 
-			// console.log('paired with ', data)
+			console.log('paired with ', data)
 
 			this.setState({
 				next_turn_ply: data.mode=='m',
 				game_play: true,
-				game_stat: 'Playing with ' + data.opp.name
+				game_stat: 'Playing with ' + data.opp.name,
+				game_side: data.mode=='m' ? 'x' : 'o'
 			})
 
 		}.bind(this));
@@ -107,7 +108,7 @@ export default class SetName extends Component {
 
 	render () {
 		const { cell_vals } = this.state
-		// console.log(cell_vals)
+		console.log(cell_vals)
 
 		return (
 			<div id='GameMain'>
@@ -151,8 +152,8 @@ export default class SetName extends Component {
 //	------------------------	------------------------	------------------------
 
 	click_cell (e) {
-		// console.log(e.currentTarget.id.substr(11))
-		// console.log(e.currentTarget)
+		console.log(e.currentTarget.id.substr(11))
+		console.log(e.currentTarget)
 
 		if (!this.state.next_turn_ply || !this.state.game_play) return
 
@@ -225,7 +226,7 @@ export default class SetName extends Component {
 
 		let { cell_vals } = this.state
 
-		cell_vals[cell_id] = 'x'
+		cell_vals[cell_id] = this.state.game_side
 
 		TweenMax.from(this.refs[cell_id], 0.7, {opacity: 0, scaleX:0, scaleY:0, ease: Power4.easeOut})
 
@@ -252,7 +253,7 @@ export default class SetName extends Component {
 
 
 		const c = data.cell_id
-		cell_vals[c] = 'o'
+		cell_vals[c] = this.state.game_side == 'x' ? 'o' : 'x'
 
 		TweenMax.from(this.refs[c], 0.7, {opacity: 0, scaleX:0, scaleY:0, ease: Power4.easeOut})
 
@@ -305,7 +306,7 @@ export default class SetName extends Component {
 			TweenMax.from('td.win', 1, {opacity: 0, ease: Linear.easeIn})
 
 			this.setState({
-				game_stat: (cell_vals[set[0]]=='x'?'You':'Opponent')+' win',
+				game_stat: (cell_vals[set[0]]==this.state.game_side?'You':'Opponent')+' win',
 				game_play: false
 			})
 

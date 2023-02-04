@@ -15,6 +15,10 @@
 		margin-top:24px;		
 	}
 
+	a:not(:first-child) > .button {
+		margin-left: 15px;
+	}
+
 	i {
 		font-family: "FontAwesome";
 	}

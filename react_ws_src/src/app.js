@@ -10,6 +10,7 @@ import './sass/main.scss'
 import Main from './views/Main'
 
 import Ttt from './views/ttt/Ttt'
+import Watch from './views/ttt/Watch'
 
 import Txt_page from './views/pages/Txt_page'
 import PopUp_page from './views/pages/PopUp_page'
@@ -31,6 +32,7 @@ let renderSite = function () {
 				<Route path='/pg/(:page)' components={{mainContent: Txt_page}} />
 
 				<Route path='/ttt' components={{mainContent: Ttt}} />
+				<Route path='/watch' components={{mainContent: Watch}} />
 
 				<Route path='/pupg/(:pu_page)' components={{popup: PopUp_page}} />
 
