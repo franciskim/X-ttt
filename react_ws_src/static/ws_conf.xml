@@ -43,7 +43,7 @@
 
 	<header>
 		<head_l_logo	i='images/react_sha.png'		u='/'		/>
-		<site_title		txt='X Tic Tac Toe'				u='/'		/>
+		<site_title		txt='TTT World Championship'				u='/'		/>
 	</header>
 
 <!--	========================	========================	========================	-->
